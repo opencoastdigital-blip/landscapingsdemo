@@ -1,0 +1,2054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TERRANOVA — Landscape Architecture Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;0,6..96,900;1,6..96,400;1,6..96,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════
+       TERRANOVA — Botanical Editorial Aesthetic
+       ═══════════════════════════════════════════ */
+
+    :root {
+      --forest: #1a2e1a;
+      --forest-deep: #0f1c0f;
+      --clay: #c4956a;
+      --clay-light: #d4ad87;
+      --cream: #f5f0e8;
+      --cream-warm: #ede5d8;
+      --charcoal: #2a2a2a;
+      --moss: #8fb339;
+      --moss-bright: #a4cc3c;
+      --stone: #8a8578;
+      --sage: #9caa8b;
+      --bark: #5c4a3a;
+
+      --font-display: 'Bodoni Moda', serif;
+      --font-body: 'Outfit', sans-serif;
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--cream);
+      color: var(--charcoal);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection {
+      background: var(--moss);
+      color: var(--forest-deep);
+    }
+
+    /* ── Noise Texture Overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px 256px;
+    }
+
+    /* ── Custom Cursor ── */
+    @media (hover: hover) {
+      body { cursor: crosshair; }
+      a, button { cursor: pointer; }
+    }
+
+    /* ═══════════════════════════════════════════
+       NAVIGATION
+       ═══════════════════════════════════════════ */
+
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      mix-blend-mode: difference;
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--cream);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cream);
+      text-decoration: none;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--cream);
+      transition: width 0.4s var(--ease-out-expo);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* ═══════════════════════════════════════════
+       HERO
+       ═══════════════════════════════════════════ */
+
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      background: var(--forest-deep);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 4rem 3rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-tagline {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--moss-bright);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s var(--ease-out-expo) 0.5s forwards;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 7vw, 7rem);
+      font-weight: 900;
+      line-height: 0.9;
+      color: var(--cream);
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeUp 1s var(--ease-out-expo) 0.7s forwards;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--clay-light);
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--sage);
+      max-width: 380px;
+      margin-bottom: 3rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s var(--ease-out-expo) 1s forwards;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--forest-deep);
+      background: var(--moss-bright);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      border: none;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s var(--ease-out-expo), background 0.3s ease;
+      align-self: flex-start;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s var(--ease-out-expo) 1.2s forwards;
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-2px) !important;
+      background: var(--moss);
+    }
+
+    .hero-cta .arrow {
+      transition: transform 0.3s var(--ease-out-expo);
+    }
+
+    .hero-cta:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Hero Visual — Layered botanical composition */
+    .hero-visual {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .hero-img-main {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.05);
+      animation: heroZoom 15s ease-in-out infinite alternate;
+      filter: brightness(0.7) contrast(1.1) saturate(1.1);
+    }
+
+    .hero-visual::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(26, 46, 26, 0.6) 0%,
+        transparent 40%,
+        transparent 60%,
+        rgba(15, 28, 15, 0.4) 100%
+      );
+    }
+
+    /* Bottom fade on hero */
+    .hero-fade {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 120px;
+      background: linear-gradient(transparent, var(--cream));
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    /* Editorial number overlay */
+    .hero-number {
+      position: absolute;
+      top: 15%;
+      right: 5%;
+      font-family: var(--font-display);
+      font-size: clamp(10rem, 20vw, 22rem);
+      font-weight: 900;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(245, 240, 232, 0.12);
+      line-height: 1;
+      z-index: 1;
+      user-select: none;
+      opacity: 0;
+      animation: fadeIn 1.5s ease 1.5s forwards;
+    }
+
+    /* ═══════════════════════════════════════════
+       MARQUEE STRIP
+       ═══════════════════════════════════════════ */
+
+    .marquee-strip {
+      background: var(--forest);
+      padding: 1rem 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 3rem;
+      animation: marquee 30s linear infinite;
+      width: max-content;
+    }
+
+    .marquee-item {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--sage);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    .marquee-item::after {
+      content: '◆';
+      font-size: 0.4rem;
+      color: var(--moss);
+    }
+
+    /* ═══════════════════════════════════════════
+       ABOUT / PHILOSOPHY SECTION
+       ═══════════════════════════════════════════ */
+
+    .about {
+      padding: 10rem 3rem 8rem;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 6rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .about-label {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--moss);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .about-label::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--moss);
+    }
+
+    .section-number {
+      font-family: var(--font-display);
+      font-size: 8rem;
+      font-weight: 900;
+      color: var(--cream-warm);
+      line-height: 1;
+      margin-bottom: 1rem;
+      transition: color 0.5s ease;
+    }
+
+    .about-left {
+      position: relative;
+    }
+
+    .about-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 4vw, 3.8rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--forest);
+      margin-bottom: 2rem;
+    }
+
+    .about-heading em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--bark);
+    }
+
+    .about-right {
+      padding-top: 12rem;
+    }
+
+    .about-text {
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--stone);
+      margin-bottom: 2rem;
+      max-width: 500px;
+    }
+
+    .about-text strong {
+      font-weight: 500;
+      color: var(--charcoal);
+    }
+
+    .stat-row {
+      display: flex;
+      gap: 4rem;
+      margin-top: 3rem;
+      padding-top: 3rem;
+      border-top: 1px solid rgba(42, 42, 42, 0.1);
+    }
+
+    .stat {
+      text-align: left;
+    }
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--forest);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--stone);
+      margin-top: 0.5rem;
+    }
+
+    /* ═══════════════════════════════════════════
+       SERVICES
+       ═══════════════════════════════════════════ */
+
+    .services {
+      background: var(--forest);
+      padding: 8rem 3rem;
+      position: relative;
+    }
+
+    .services::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 0;
+      right: 0;
+      height: 120px;
+      background: linear-gradient(var(--cream), transparent);
+      pointer-events: none;
+    }
+
+    .services-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .services-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 5rem;
+      padding-top: 4rem;
+    }
+
+    .services-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 4vw, 3.8rem);
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1.1;
+    }
+
+    .services-heading em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--clay-light);
+    }
+
+    .services-subtext {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--sage);
+      max-width: 300px;
+      text-align: right;
+      line-height: 1.7;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .service-card {
+      background: rgba(245, 240, 232, 0.03);
+      border: 1px solid rgba(245, 240, 232, 0.06);
+      padding: 3rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.5s ease, transform 0.4s var(--ease-out-expo);
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--moss);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s var(--ease-out-expo);
+    }
+
+    .service-card:hover {
+      background: rgba(245, 240, 232, 0.06);
+    }
+
+    .service-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .service-icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: var(--moss-bright);
+      stroke-width: 1;
+      fill: none;
+    }
+
+    .service-num {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--clay);
+      margin-bottom: 1rem;
+      letter-spacing: 0.1em;
+    }
+
+    .service-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .service-desc {
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--sage);
+    }
+
+    /* ═══════════════════════════════════════════
+       PORTFOLIO / WORK SHOWCASE
+       ═══════════════════════════════════════════ */
+
+    .portfolio {
+      padding: 10rem 3rem;
+      max-width: 1500px;
+      margin: 0 auto;
+    }
+
+    .portfolio-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 5rem;
+      align-items: end;
+    }
+
+    .portfolio-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 4vw, 3.8rem);
+      font-weight: 700;
+      color: var(--forest);
+      line-height: 1.1;
+    }
+
+    .portfolio-heading em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--bark);
+    }
+
+    .portfolio-intro {
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--stone);
+      max-width: 400px;
+      justify-self: end;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      grid-template-rows: 400px 400px;
+      gap: 1.5rem;
+    }
+
+    .portfolio-item {
+      position: relative;
+      overflow: hidden;
+      background: var(--forest);
+    }
+
+    .portfolio-item:nth-child(1) {
+      grid-row: 1 / 3;
+    }
+
+    .portfolio-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s var(--ease-out-expo), filter 0.5s ease;
+      filter: brightness(0.75) saturate(1.1);
+    }
+
+    .portfolio-item:hover .portfolio-img {
+      transform: scale(1.06);
+      filter: brightness(0.85) saturate(1.2);
+    }
+
+    .portfolio-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(245, 240, 232, 0);
+      transition: border-color 0.4s ease;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .portfolio-item:hover::after {
+      border-color: rgba(245, 240, 232, 0.15);
+    }
+
+    .portfolio-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2.5rem;
+      background: linear-gradient(transparent 0%, rgba(15, 28, 15, 0.75) 70%, rgba(15, 28, 15, 0.9) 100%);
+      transform: translateY(10px);
+      opacity: 0;
+      transition: all 0.5s var(--ease-out-expo);
+    }
+
+    .portfolio-item:hover .portfolio-overlay {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Always show overlay on the large featured item */
+    .portfolio-grid .portfolio-item:first-child .portfolio-overlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .portfolio-tag {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--moss-bright);
+      margin-bottom: 0.5rem;
+    }
+
+    .portfolio-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--cream);
+    }
+
+    /* Second row — horizontal cards */
+    .portfolio-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .portfolio-row .portfolio-item {
+      height: 300px;
+    }
+
+    /* ═══════════════════════════════════════════
+       TESTIMONIAL
+       ═══════════════════════════════════════════ */
+
+    .testimonial {
+      background: var(--forest-deep);
+      padding: 8rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonial::before {
+      content: '"';
+      position: absolute;
+      top: -2rem;
+      left: 5%;
+      font-family: var(--font-display);
+      font-size: 30rem;
+      font-weight: 900;
+      color: rgba(143, 179, 57, 0.05);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .testimonial-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .testimonial-stars {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .testimonial-stars span {
+      color: var(--moss-bright);
+      font-size: 1rem;
+    }
+
+    .testimonial-quote {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--cream);
+      margin-bottom: 3rem;
+    }
+
+    .testimonial-author {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--clay-light);
+    }
+
+    .testimonial-role {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: var(--sage);
+      margin-top: 0.3rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* ═══════════════════════════════════════════
+       PROCESS SECTION
+       ═══════════════════════════════════════════ */
+
+    .process {
+      padding: 10rem 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .process-header {
+      text-align: center;
+      margin-bottom: 6rem;
+    }
+
+    .process-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 4vw, 3.8rem);
+      font-weight: 700;
+      color: var(--forest);
+    }
+
+    .process-heading em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--bark);
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 45px;
+      left: 12.5%;
+      right: 12.5%;
+      height: 1px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--clay) 0px,
+        var(--clay) 8px,
+        transparent 8px,
+        transparent 16px
+      );
+    }
+
+    .process-step {
+      text-align: center;
+      padding: 0 2rem;
+      position: relative;
+    }
+
+    .step-circle {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 1px solid var(--forest);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2rem;
+      background: var(--cream);
+      position: relative;
+      z-index: 1;
+      transition: all 0.4s var(--ease-out-expo);
+    }
+
+    .process-step:hover .step-circle {
+      background: var(--forest);
+      border-color: var(--forest);
+    }
+
+    .step-circle svg {
+      width: 32px;
+      height: 32px;
+      stroke: var(--forest);
+      stroke-width: 1.5;
+      fill: none;
+      transition: stroke 0.4s ease;
+    }
+
+    .process-step:hover .step-circle svg {
+      stroke: var(--moss-bright);
+    }
+
+    .step-num {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--clay);
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.1em;
+    }
+
+    .step-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--forest);
+      margin-bottom: 0.75rem;
+    }
+
+    .step-desc {
+      font-size: 0.85rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--stone);
+    }
+
+    /* ═══════════════════════════════════════════
+       CTA BANNER
+       ═══════════════════════════════════════════ */
+
+    .cta-banner {
+      margin: 0 3rem 8rem;
+      background: var(--forest);
+      padding: 6rem;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 4rem;
+      align-items: center;
+      border-radius: 2px;
+    }
+
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      border: 1px solid rgba(143, 179, 57, 0.1);
+      pointer-events: none;
+    }
+
+    .cta-banner::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      border: 1px solid rgba(196, 149, 106, 0.08);
+      pointer-events: none;
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-heading em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--clay-light);
+    }
+
+    .cta-text {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--sage);
+      line-height: 1.7;
+      max-width: 450px;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--forest-deep);
+      background: var(--moss-bright);
+      padding: 1.2rem 3rem;
+      text-decoration: none;
+      border: none;
+      transition: all 0.3s var(--ease-out-expo);
+    }
+
+    .cta-btn-primary:hover {
+      background: var(--moss);
+      transform: translateY(-2px);
+    }
+
+    .cta-btn-secondary {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cream);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(245, 240, 232, 0.3);
+      padding-bottom: 4px;
+      transition: border-color 0.3s ease;
+    }
+
+    .cta-btn-secondary:hover {
+      border-color: var(--cream);
+    }
+
+    /* ═══════════════════════════════════════════
+       CONTACT FORM
+       ═══════════════════════════════════════════ */
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-group label {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sage);
+    }
+
+    .form-group label .optional {
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      opacity: 0.6;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--cream);
+      background: rgba(245, 240, 232, 0.06);
+      border: 1px solid rgba(245, 240, 232, 0.12);
+      padding: 0.85rem 1rem;
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(156, 170, 139, 0.4);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--moss);
+      background: rgba(245, 240, 232, 0.09);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--forest-deep);
+      background: var(--moss-bright);
+      padding: 1.2rem 3rem;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.3s var(--ease-out-expo);
+      align-self: flex-start;
+      margin-top: 0.5rem;
+    }
+
+    .form-submit:hover {
+      background: var(--moss);
+      transform: translateY(-2px);
+    }
+
+    .form-submit .arrow {
+      transition: transform 0.3s var(--ease-out-expo);
+    }
+
+    .form-submit:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    .form-thank-you {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 1rem;
+      padding: 3rem 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-thank-you.visible {
+      display: flex;
+      animation: fadeUp 0.6s var(--ease-out-expo) forwards;
+    }
+
+    .form-thank-you h3 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--cream);
+    }
+
+    .form-thank-you h3 em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--clay-light);
+    }
+
+    .form-thank-you p {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--sage);
+      line-height: 1.7;
+      max-width: 400px;
+    }
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════ */
+
+    .footer {
+      background: var(--forest-deep);
+      padding: 5rem 3rem 2rem;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 4rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding-bottom: 4rem;
+      border-bottom: 1px solid rgba(245, 240, 232, 0.06);
+    }
+
+    .footer-brand-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--cream);
+      letter-spacing: 0.2em;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-brand-desc {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--sage);
+      line-height: 1.7;
+      max-width: 300px;
+    }
+
+    .footer-col-title {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--clay);
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-links a {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--sage);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--cream);
+    }
+
+    .footer-bottom {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: rgba(156, 170, 139, 0.5);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-social a {
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(245, 240, 232, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .footer-social a:hover {
+      border-color: var(--moss);
+      background: rgba(143, 179, 57, 0.1);
+    }
+
+    .footer-social svg {
+      width: 14px;
+      height: 14px;
+      fill: var(--sage);
+    }
+
+    /* ═══════════════════════════════════════════
+       PAGE LOADER
+       ═══════════════════════════════════════════ */
+
+    .page-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: var(--forest-deep);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.6s ease 0.2s, visibility 0s 0.8s;
+    }
+
+    .page-loader.loaded {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loader-text {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0;
+      animation: loaderPulse 1.2s ease-in-out infinite;
+    }
+
+    @keyframes loaderPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    /* ═══════════════════════════════════════════
+       SCROLL-TO-TOP
+       ═══════════════════════════════════════════ */
+
+    .scroll-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 90;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--forest);
+      background: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s var(--ease-out-expo);
+      pointer-events: none;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .scroll-top.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .scroll-top:hover {
+      background: var(--forest);
+      border-color: var(--forest);
+    }
+
+    .scroll-top svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--forest);
+      stroke-width: 2;
+      fill: none;
+      transition: stroke 0.3s ease;
+    }
+
+    .scroll-top:hover svg {
+      stroke: var(--cream);
+    }
+
+    /* ═══════════════════════════════════════════
+       SCROLL ANIMATIONS
+       ═══════════════════════════════════════════ */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* Image reveal effect */
+    .portfolio-img, .hero-img-main {
+      opacity: 0;
+      transition: opacity 0.8s ease, transform 0.8s var(--ease-out-expo), filter 0.5s ease;
+    }
+
+    .portfolio-img.img-loaded, .hero-img-main.img-loaded {
+      opacity: 1;
+    }
+
+    /* Stat number count-up glow */
+    .stat-number {
+      transition: color 0.3s ease;
+    }
+
+    .stat:hover .stat-number {
+      color: var(--moss);
+    }
+
+    /* ═══════════════════════════════════════════
+       KEYFRAMES
+       ═══════════════════════════════════════════ */
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    @keyframes heroZoom {
+      from { transform: scale(1.05); }
+      to { transform: scale(1.12); }
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+       ═══════════════════════════════════════════ */
+
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { position: absolute; inset: 0; }
+      .hero-visual::after {
+        background: linear-gradient(
+          180deg,
+          rgba(15, 28, 15, 0.3) 0%,
+          rgba(15, 28, 15, 0.7) 60%,
+          rgba(15, 28, 15, 0.9) 100%
+        );
+      }
+      .hero-left { z-index: 5; }
+      .hero-number { display: none; }
+      .about { grid-template-columns: 1fr; gap: 3rem; }
+      .about-right { padding-top: 0; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .portfolio-grid { grid-template-columns: 1fr; grid-template-rows: 400px 300px; }
+      .portfolio-item:nth-child(1) { grid-row: auto; }
+      .portfolio-row { grid-template-columns: 1fr 1fr; }
+      .process-steps { grid-template-columns: 1fr 1fr; gap: 3rem; }
+      .process-steps::before { display: none; }
+      .cta-banner { grid-template-columns: 1fr; padding: 4rem 3rem; }
+      .cta-actions { align-items: flex-start; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero-left { padding: 2rem 1.5rem; }
+      .about { padding: 5rem 1.5rem; }
+      .services { padding: 5rem 1.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .services-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .services-subtext { text-align: left; }
+      .portfolio { padding: 5rem 1.5rem; }
+      .portfolio-header { grid-template-columns: 1fr; }
+      .portfolio-row { grid-template-columns: 1fr; }
+      .process { padding: 5rem 1.5rem; }
+      .process-steps { grid-template-columns: 1fr; }
+      .stat-row { flex-direction: column; gap: 2rem; }
+      .cta-banner { margin: 0 1.5rem 5rem; padding: 3rem 2rem; }
+      .footer { padding: 3rem 1.5rem 1.5rem; }
+      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════ PAGE LOADER ════════════════════ -->
+  <div class="page-loader" id="pageLoader">
+    <span class="loader-text">Terranova</span>
+  </div>
+
+  <!-- ════════════════════ SCROLL TO TOP ════════════════════ -->
+  <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <!-- ════════════════════ NAVIGATION ════════════════════ -->
+  <nav class="nav">
+    <a href="#" class="nav-logo">Terranova</a>
+    <ul class="nav-links">
+      <li><a href="#about">Philosophy</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ════════════════════ HERO ════════════════════ -->
+  <section class="hero">
+    <div class="hero-left">
+      <span class="hero-tagline">Landscape Architecture Studio — Est. 2009</span>
+      <h1 class="hero-title">Where Earth<br>Becomes <em>Art</em></h1>
+      <p class="hero-desc">We sculpt living environments that blur the boundary between architecture and the wild. Every terrain tells a story — we make sure it's unforgettable.</p>
+      <a href="#contact" class="hero-cta">
+        Begin Your Transformation
+        <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-visual">
+        <img
+          class="hero-img-main"
+          src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=1400&q=80&auto=format&fit=crop"
+          alt="Formal garden pathway with rose arches and manicured boxwood hedges"
+          onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg, #1a2e1a 0%, #2d4a2d 40%, #1a2e1a 100%)'"
+        >
+      </div>
+    </div>
+
+    <div class="hero-number" aria-hidden="true">01</div>
+    <div class="hero-fade"></div>
+  </section>
+
+  <!-- ════════════════════ MARQUEE ════════════════════ -->
+  <div class="marquee-strip">
+    <div class="marquee-track">
+      <span class="marquee-item">Residential Gardens</span>
+      <span class="marquee-item">Estate Grounds</span>
+      <span class="marquee-item">Commercial Landscapes</span>
+      <span class="marquee-item">Hardscape Design</span>
+      <span class="marquee-item">Water Features</span>
+      <span class="marquee-item">Seasonal Maintenance</span>
+      <span class="marquee-item">Outdoor Living</span>
+      <span class="marquee-item">Native Planting</span>
+      <span class="marquee-item">Residential Gardens</span>
+      <span class="marquee-item">Estate Grounds</span>
+      <span class="marquee-item">Commercial Landscapes</span>
+      <span class="marquee-item">Hardscape Design</span>
+      <span class="marquee-item">Water Features</span>
+      <span class="marquee-item">Seasonal Maintenance</span>
+      <span class="marquee-item">Outdoor Living</span>
+      <span class="marquee-item">Native Planting</span>
+    </div>
+  </div>
+
+  <!-- ════════════════════ ABOUT ════════════════════ -->
+  <section class="about" id="about">
+    <div class="about-left">
+      <div class="about-label">Our Philosophy</div>
+      <div class="section-number reveal">01</div>
+      <h2 class="about-heading reveal reveal-delay-1">
+        Not just landscaping.<br>
+        <em>Land crafting.</em>
+      </h2>
+    </div>
+    <div class="about-right">
+      <p class="about-text reveal reveal-delay-2">
+        <strong>Terranova was born from a simple conviction:</strong> the ground beneath your feet deserves the same creative ambition as the walls around you. We approach every acre, every garden bed, every stone edge as a design problem with a living, breathing answer.
+      </p>
+      <p class="about-text reveal reveal-delay-3">
+        Our team pairs horticultural science with spatial design thinking. The result isn't a lawn — it's a landscape that evolves, surprises, and endures across seasons.
+      </p>
+      <div class="stat-row reveal reveal-delay-4">
+        <div class="stat">
+          <div class="stat-number">16</div>
+          <div class="stat-label">Years in Practice</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">340+</div>
+          <div class="stat-label">Projects Completed</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">12</div>
+          <div class="stat-label">Design Awards</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════ SERVICES ════════════════════ -->
+  <section class="services" id="services">
+    <div class="services-inner">
+      <div class="services-header">
+        <h2 class="services-heading reveal">
+          What We <em>Cultivate</em>
+        </h2>
+        <p class="services-subtext reveal reveal-delay-1">
+          From initial soil analysis to the final stone placement — every phase is designed, not just executed.
+        </p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card reveal reveal-delay-1">
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48"><path d="M24 4c-5 8-16 14-16 26a16 16 0 0 0 32 0C40 18 29 12 24 4z"/></svg>
+          </div>
+          <div class="service-num">01</div>
+          <h3 class="service-title">Landscape Design</h3>
+          <p class="service-desc">Full-scope design from concept through planting plans. We map topography, sun paths, drainage, and sight lines to compose spaces that feel inevitable.</p>
+        </div>
+
+        <div class="service-card reveal reveal-delay-2">
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48"><rect x="6" y="18" width="36" height="24" rx="2"/><path d="M6 24h36M18 18V6l6 4 6-4v12"/></svg>
+          </div>
+          <div class="service-num">02</div>
+          <h3 class="service-title">Hardscape & Masonry</h3>
+          <p class="service-desc">Patios, retaining walls, fire pits, and walkways crafted from natural stone, reclaimed brick, and poured concrete. Structure that ages with grace.</p>
+        </div>
+
+        <div class="service-card reveal reveal-delay-3">
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="8"/><path d="M24 4v8M24 36v8M4 24h8M36 24h8M9 9l6 6M33 33l6 6M9 39l6-6M33 15l6-6"/></svg>
+          </div>
+          <div class="service-num">03</div>
+          <h3 class="service-title">Native Planting</h3>
+          <p class="service-desc">Climate-tuned, regionally authentic plant palettes that support local ecology. Less irrigation, more life. Every bed is a micro-habitat.</p>
+        </div>
+
+        <div class="service-card reveal reveal-delay-1">
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48"><path d="M8 40V20l16-12 16 12v20z"/><path d="M18 40V28h12v12"/></svg>
+          </div>
+          <div class="service-num">04</div>
+          <h3 class="service-title">Outdoor Living</h3>
+          <p class="service-desc">Kitchens, pergolas, lighting systems, and entertainment areas engineered for year-round use. We extend your home into the ground it sits on.</p>
+        </div>
+
+        <div class="service-card reveal reveal-delay-2">
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48"><path d="M6 38c6-8 12-4 18-12s12-4 18-12"/><path d="M6 30c6-8 12-4 18-12s12-4 18-12"/></svg>
+          </div>
+          <div class="service-num">05</div>
+          <h3 class="service-title">Water Features</h3>
+          <p class="service-desc">Ponds, streams, fountains, and rain gardens. Water adds motion, sound, and reflection — the sensory layer most landscapes are missing.</p>
+        </div>
+
+        <div class="service-card reveal reveal-delay-3">
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48"><path d="M12 36c0-8 12-16 12-28 0 12 12 20 12 28a12 12 0 0 1-24 0z"/><path d="M20 36a4 4 0 0 0 8 0"/></svg>
+          </div>
+          <div class="service-num">06</div>
+          <h3 class="service-title">Seasonal Care</h3>
+          <p class="service-desc">Pruning, mulching, fertilization, and seasonal rotations. We maintain what we build — because great landscapes are never finished, only tended.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════ PORTFOLIO ════════════════════ -->
+  <section class="portfolio" id="portfolio">
+    <div class="portfolio-header">
+      <div>
+        <div class="about-label">Selected Work</div>
+        <h2 class="portfolio-heading reveal">
+          Grounds That <em>Ground You</em>
+        </h2>
+      </div>
+      <p class="portfolio-intro reveal reveal-delay-1">
+        Each project is a collaboration between client vision and ecological reality. Here's a look at some of our recent transformations.
+      </p>
+    </div>
+
+    <div class="portfolio-grid">
+      <div class="portfolio-item reveal">
+        <img
+          class="portfolio-img"
+          src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=900&q=80&auto=format&fit=crop"
+          alt="Rolling green hills and lush aerial landscape"
+          onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(160deg, #2d4a2d, #1a2e1a, #3d5a3d)'"
+        >
+        <div class="portfolio-overlay">
+          <div class="portfolio-tag">Residential Estate</div>
+          <div class="portfolio-name">The Hargrove Grounds</div>
+        </div>
+      </div>
+
+      <div class="portfolio-item reveal reveal-delay-1">
+        <img
+          class="portfolio-img"
+          src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&q=80&auto=format&fit=crop"
+          alt="Luxury modern home with pool and tropical landscaping"
+          onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(160deg, #5c4a3a, #3a2e22, #7a6352)'"
+        >
+        <div class="portfolio-overlay">
+          <div class="portfolio-tag">Luxury Residential</div>
+          <div class="portfolio-name">Casa Paloma</div>
+        </div>
+      </div>
+
+      <div class="portfolio-item reveal reveal-delay-2">
+        <img
+          class="portfolio-img"
+          src="https://images.unsplash.com/photo-1753194931766-211c9f563156?w=600&q=80&auto=format&fit=crop"
+          alt="Luxury outdoor pool and patio with Mediterranean landscaping at night"
+          onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(160deg, #4a6a4a, #2a4a2a, #5a7a5a)'"
+        >
+        <div class="portfolio-overlay">
+          <div class="portfolio-tag">Resort & Outdoor Living</div>
+          <div class="portfolio-name">The Adriatic Terrace</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="portfolio-row">
+      <div class="portfolio-item reveal reveal-delay-1">
+        <img
+          class="portfolio-img"
+          src="https://images.unsplash.com/photo-1743669936293-f6248e671fc9?w=600&q=80&auto=format&fit=crop"
+          alt="Green garden with raised planting beds and lush foliage"
+          onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(160deg, #3d5a3d, #1a3a1a, #4d6a4d)'"
+        >
+        <div class="portfolio-overlay">
+          <div class="portfolio-tag">Garden Design</div>
+          <div class="portfolio-name">Wren Hollow</div>
+        </div>
+      </div>
+
+      <div class="portfolio-item reveal reveal-delay-2">
+        <img
+          class="portfolio-img"
+          src="https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=600&q=80&auto=format&fit=crop"
+          alt="Modern home exterior with stone pavers and manicured lawn"
+          onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(160deg, #6a6050, #4a4030, #8a7a6a)'"
+        >
+        <div class="portfolio-overlay">
+          <div class="portfolio-tag">Hardscape</div>
+          <div class="portfolio-name">River Stone Retreat</div>
+        </div>
+      </div>
+
+      <div class="portfolio-item reveal reveal-delay-3">
+        <img
+          class="portfolio-img"
+          src="https://images.unsplash.com/photo-1558036117-15d82a90b9b1?w=600&q=80&auto=format&fit=crop"
+          alt="Expansive green lawn at golden hour with garden beds"
+          onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(160deg, #2a4a5a, #1a3a4a, #3a5a6a)'"
+        >
+        <div class="portfolio-overlay">
+          <div class="portfolio-tag">Estate Lawn</div>
+          <div class="portfolio-name">Golden Hour Gardens</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════ TESTIMONIAL ════════════════════ -->
+  <section class="testimonial">
+    <div class="testimonial-inner reveal">
+      <div class="testimonial-stars">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      </div>
+      <blockquote class="testimonial-quote">
+        "Terranova didn't just redesign our yard — they reframed how we experience our home. The garden they created feels like it's been here for a hundred years. Our neighbors think we moved."
+      </blockquote>
+      <div class="testimonial-author">Catherine & David Marchetti</div>
+      <div class="testimonial-role">Homeowners, Hargrove Estate</div>
+    </div>
+  </section>
+
+  <!-- ════════════════════ PROCESS ════════════════════ -->
+  <section class="process" id="process">
+    <div class="process-header">
+      <div class="about-label" style="justify-content: center;">How We Work</div>
+      <h2 class="process-heading reveal">
+        From Soil to <em>Spectacle</em>
+      </h2>
+    </div>
+
+    <div class="process-steps">
+      <div class="process-step reveal reveal-delay-1">
+        <div class="step-circle">
+          <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="10"/><path d="M16 12v8M12 16h8"/></svg>
+        </div>
+        <div class="step-num">01</div>
+        <h3 class="step-title">Discover</h3>
+        <p class="step-desc">We walk your land, study the soil, trace the light, and listen to what you imagine. Every detail informs the design.</p>
+      </div>
+
+      <div class="process-step reveal reveal-delay-2">
+        <div class="step-circle">
+          <svg viewBox="0 0 32 32"><path d="M6 26L16 6l10 20z"/></svg>
+        </div>
+        <div class="step-num">02</div>
+        <h3 class="step-title">Design</h3>
+        <p class="step-desc">We produce detailed plans, 3D renderings, and material samples. You see the vision before a single shovel breaks ground.</p>
+      </div>
+
+      <div class="process-step reveal reveal-delay-3">
+        <div class="step-circle">
+          <svg viewBox="0 0 32 32"><rect x="6" y="6" width="20" height="20" rx="2"/><path d="M6 14h20M14 6v20"/></svg>
+        </div>
+        <div class="step-num">03</div>
+        <h3 class="step-title">Build</h3>
+        <p class="step-desc">Our in-house crews execute with precision. Hardscape, grading, planting, irrigation — coordinated, on schedule, and clean.</p>
+      </div>
+
+      <div class="process-step reveal reveal-delay-4">
+        <div class="step-circle">
+          <svg viewBox="0 0 32 32"><path d="M16 6c-6 4-10 10-10 16h20c0-6-4-12-10-16z"/><path d="M16 22v4"/></svg>
+        </div>
+        <div class="step-num">04</div>
+        <h3 class="step-title">Nurture</h3>
+        <p class="step-desc">We stay on through the first growing seasons, adjusting, pruning, and ensuring everything roots deep and thrives long.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════ CTA BANNER ════════════════════ -->
+  <section class="cta-banner" id="contact">
+    <div class="cta-content">
+      <h2 class="cta-heading reveal">
+        Your land is waiting.<br>
+        <em>Let's make it extraordinary.</em>
+      </h2>
+      <p class="cta-text reveal reveal-delay-1">
+        Whether it's a backyard transformation or a multi-acre estate, the first step is always a conversation. Tell us about your space, and we'll tell you what's possible.
+      </p>
+    </div>
+    <form class="contact-form" id="contactForm" onsubmit="handleFormSubmit(event)">
+      <div class="form-row">
+        <div class="form-group reveal reveal-delay-1">
+          <label for="contactName">Name</label>
+          <input type="text" id="contactName" name="name" placeholder="Your full name" required>
+        </div>
+        <div class="form-group reveal reveal-delay-1">
+          <label for="contactEmail">Email</label>
+          <input type="email" id="contactEmail" name="email" placeholder="you@example.com" required>
+        </div>
+      </div>
+      <div class="form-group reveal reveal-delay-2">
+        <label for="contactPhone">Phone <span class="optional">(optional)</span></label>
+        <input type="tel" id="contactPhone" name="phone" placeholder="(555) 000-0000">
+      </div>
+      <div class="form-group reveal reveal-delay-2">
+        <label for="contactMessage">Message</label>
+        <textarea id="contactMessage" name="message" placeholder="Tell us about your space and vision..." required></textarea>
+      </div>
+      <button type="submit" class="form-submit reveal reveal-delay-3">
+        Send Message
+        <span class="arrow">→</span>
+      </button>
+    </form>
+    <div class="form-thank-you" id="formThankYou">
+      <h3>Thank you, <em>we'll be in touch.</em></h3>
+      <p>We've received your message and will reach out within 24 hours to begin discussing your vision.</p>
+    </div>
+  </section>
+
+  <!-- ════════════════════ FOOTER ════════════════════ -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">TERRANOVA</div>
+        <p class="footer-brand-desc">
+          Landscape architecture studio crafting living environments since 2009. Licensed, insured, and unreasonably passionate about dirt.
+        </p>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Services</div>
+        <ul class="footer-links">
+          <li><a href="#services">Landscape Design</a></li>
+          <li><a href="#services">Hardscape & Masonry</a></li>
+          <li><a href="#services">Native Planting</a></li>
+          <li><a href="#services">Water Features</a></li>
+          <li><a href="#services">Seasonal Care</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Studio</div>
+        <ul class="footer-links">
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#process">Our Process</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-links">
+          <li><a href="mailto:hello@terranova.studio">hello@terranova.studio</a></li>
+          <li><a href="tel:+15551234567">(555) 123-4567</a></li>
+          <li><a href="#contact">42 Birch Lane, Suite 3<br>Portland, OR 97205</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 Terranova Studio. All rights reserved.</span>
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
+        </a>
+        <a href="#" aria-label="Pinterest">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.08 2.46 7.58 5.97 9.12-.08-.72-.16-1.82.03-2.6.17-.72 1.12-4.74 1.12-4.74s-.29-.57-.29-1.41c0-1.32.77-2.31 1.72-2.31.81 0 1.2.61 1.2 1.34 0 .82-.52 2.04-.79 3.17-.22.94.47 1.71 1.4 1.71 1.68 0 2.97-1.77 2.97-4.33 0-2.26-1.63-3.84-3.95-3.84-2.69 0-4.27 2.02-4.27 4.1 0 .81.31 1.68.7 2.16.08.09.09.17.07.27-.07.3-.24.94-.27 1.07-.04.18-.14.22-.33.13-1.23-.57-2-2.37-2-3.82 0-3.11 2.26-5.96 6.52-5.96 3.42 0 6.08 2.44 6.08 5.7 0 3.4-2.14 6.13-5.12 6.13-1 0-1.94-.52-2.26-1.13l-.62 2.34c-.22.86-.82 1.93-1.22 2.59.92.28 1.89.44 2.9.44 5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>
+        </a>
+        <a href="#" aria-label="Houzz">
+          <svg viewBox="0 0 24 24"><path d="M12 2v8h8v12h-8v-8H4V2z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════
+       JAVASCRIPT — Scroll Reveals & Parallax
+       ═══════════════════════════════════════════ -->
+  <script>
+    // ── Page Loader ──
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('pageLoader').classList.add('loaded');
+      }, 600);
+    });
+
+    // ── Image Reveal on Load ──
+    document.querySelectorAll('.portfolio-img, .hero-img-main').forEach(img => {
+      if (img.complete) {
+        img.classList.add('img-loaded');
+      } else {
+        img.addEventListener('load', () => img.classList.add('img-loaded'));
+        img.addEventListener('error', () => img.classList.add('img-loaded'));
+      }
+    });
+
+    // ── Intersection Observer for scroll reveals ──
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    reveals.forEach(el => observer.observe(el));
+
+    // ── Smooth parallax on hero number ──
+    const heroNumber = document.querySelector('.hero-number');
+    let ticking = false;
+    if (heroNumber) {
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            const scrollY = window.scrollY;
+            if (scrollY < window.innerHeight) {
+              heroNumber.style.transform = `translateY(${scrollY * 0.3}px)`;
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+    }
+
+    // ── Staggered service card entrance ──
+    const serviceCards = document.querySelectorAll('.service-card');
+    let cardIndex = 0;
+    const serviceObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.style.transitionDelay = `${cardIndex * 0.08}s`;
+          entry.target.classList.add('visible');
+          serviceObserver.unobserve(entry.target);
+          cardIndex++;
+        }
+      });
+    }, { threshold: 0.1 });
+
+    serviceCards.forEach(card => serviceObserver.observe(card));
+
+    // ── Nav background on scroll ──
+    const nav = document.querySelector('.nav');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      if (scrollY > 80) {
+        nav.style.mixBlendMode = 'normal';
+        nav.style.background = 'rgba(15, 28, 15, 0.92)';
+        nav.style.backdropFilter = 'blur(12px)';
+        nav.style.WebkitBackdropFilter = 'blur(12px)';
+        nav.style.padding = '1rem 3rem';
+        nav.style.transition = 'all 0.4s ease';
+      } else {
+        nav.style.mixBlendMode = 'difference';
+        nav.style.background = 'transparent';
+        nav.style.backdropFilter = 'none';
+        nav.style.WebkitBackdropFilter = 'none';
+        nav.style.padding = '1.5rem 3rem';
+      }
+    }, { passive: true });
+
+    // ── Scroll to Top ──
+    const scrollTopBtn = document.getElementById('scrollTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 600) {
+        scrollTopBtn.classList.add('visible');
+      } else {
+        scrollTopBtn.classList.remove('visible');
+      }
+    }, { passive: true });
+
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ── Stat Counter Animation ──
+    const statNumbers = document.querySelectorAll('.stat-number');
+    const statObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const text = el.textContent;
+          const num = parseInt(text);
+          const suffix = text.replace(/[0-9]/g, '');
+          if (!isNaN(num)) {
+            let current = 0;
+            const step = Math.max(1, Math.floor(num / 40));
+            const timer = setInterval(() => {
+              current += step;
+              if (current >= num) {
+                current = num;
+                clearInterval(timer);
+              }
+              el.textContent = current + suffix;
+            }, 30);
+          }
+          statObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    statNumbers.forEach(el => statObserver.observe(el));
+
+    // ── Smooth anchor scrolling ──
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        const target = document.querySelector(anchor.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+    // ── Contact Form ──
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      document.getElementById('contactForm').style.display = 'none';
+      document.getElementById('formThankYou').classList.add('visible');
+    }
+  </script>
+
+</body>
+</html>
